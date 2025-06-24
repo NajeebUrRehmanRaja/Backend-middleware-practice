@@ -1,4 +1,5 @@
 import express from "express";
+import globalErrorHandler from "./middlewares/errorHandler.middleware.js"
 
 const app = express();
 
@@ -7,11 +8,6 @@ app.get("/", (req, res, next)=>{
     res.json({ msg: "Welcome to the Website! Backend Practice."});
 })
 
-// global error handling
-
-app.use((err, req, res, next)=>{
-    const statusCode = err.statusCode || 500;
-
-    return res.status(statusCode).json({ msg : "Server Error" , errorStack : config.env === 'development' ? err.Stack : ""})
-})
+// middleware use here:
+app.use(globalErrorHandler)
 export default app;
